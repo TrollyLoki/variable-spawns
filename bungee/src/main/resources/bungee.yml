@@ -1,0 +1,5 @@
+name: VariableSpawns
+version: '$version'
+main: net.trollyloki.plugins.variablespawns.bungee.VariableSpawnsPlugin
+
+author: TrollyLoki

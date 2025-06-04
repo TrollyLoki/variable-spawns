@@ -1,0 +1,10 @@
+name: VariableSpawns
+version: '$version'
+main: net.trollyloki.plugins.variablespawns.bukkit.VariableSpawnsPlugin
+api-version: '$apiVersion'
+
+author: TrollyLoki
+
+commands:
+  variablespawns:
+    permission: variablespawns.reload

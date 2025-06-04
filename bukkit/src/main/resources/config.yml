@@ -1,0 +1,17 @@
+# The identifier for this server that other servers will use to select a spawn region.
+current-server: hub
+
+# The spawn regions for this server.
+# Each subsection defines a spawn region corresponding to a server identifier.
+# For example,
+# survival:  # the defined region is used when players join from a server with this identifier
+#   world: world  # the name of the world to spawn players in (if excluded, the default world will be used)
+#   x1: 48  # the coordinates of one corner of the spawn region
+#   y1: 1   # see above
+#   z1: 48  # see above
+#   x2: 64  # the coordinates of the opposite corner of the spawn region (any excluded values are set equal to the first corner)
+#   y2: 1   # see above (note: make this the same as y1 if you want players to always spawn at the same height)
+#   z2: 64  # see above
+#   yaw: 90  # the yaw to spawn players with (if excluded, players will spawn with a random yaw)
+#   pitch: 0  # the pitch to spawn players with (if excluded, players will spawn with a random pitch)
+spawns:
