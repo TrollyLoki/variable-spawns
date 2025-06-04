@@ -4,7 +4,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.util.BoundingBox;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
@@ -15,25 +14,30 @@ public class SpawnRegion {
 
     private final @NotNull World world;
     private final @NotNull BoundingBox boundingBox;
-    private final @Nullable Float yaw, pitch;
+    private final float minYaw, maxYaw;
+    private final float minPitch, maxPitch;
 
     /**
      * Creates a new spawn region.
      *
-     * @param world       world
-     * @param boundingBox bounding box
-     * @param yaw         yaw, or {@code null} to randomize yaw
-     * @param pitch       pitch, or {@code null} to randomize pitch
+     * @param world       world that the player must spawn in
+     * @param boundingBox bounding box that the player's spawn location must be within
+     * @param minYaw      minimum yaw that the player can spawn with
+     * @param maxYaw      maximum yaw that the player can spawn with
+     * @param minPitch    minimum pitch that the player can spawn with
+     * @param maxPitch    maximum pitch that the player can spawn with
      */
-    public SpawnRegion(@NotNull World world, @NotNull BoundingBox boundingBox, @Nullable Float yaw, @Nullable Float pitch) {
+    public SpawnRegion(@NotNull World world, @NotNull BoundingBox boundingBox, float minYaw, float maxYaw, float minPitch, float maxPitch) {
         this.world = world;
         this.boundingBox = boundingBox;
-        this.yaw = yaw;
-        this.pitch = pitch;
+        this.minYaw = minYaw;
+        this.maxYaw = maxYaw;
+        this.minPitch = minPitch;
+        this.maxPitch = maxPitch;
     }
 
     /**
-     * Gets the world in which players can spawn.
+     * Gets the world that the player must spawn in.
      *
      * @return world
      */
@@ -42,30 +46,48 @@ public class SpawnRegion {
     }
 
     /**
-     * Gets a copy of the bounding box defining the range of locations where players can spawn.
+     * Gets a copy of the bounding box that the player's spawn location must be within.
      *
-     * @return bounding box.
+     * @return bounding box
      */
     public @NotNull BoundingBox getBoundingBox() {
         return boundingBox.clone();
     }
 
     /**
-     * Gets the yaw players should spawn with.
+     * Gets the minimum yaw that the player can spawn with.
      *
-     * @return yaw, or {@code null} if yaw will be randomized
+     * @return minimum yaw
      */
-    public @Nullable Float getYaw() {
-        return yaw;
+    public float getMinYaw() {
+        return minYaw;
     }
 
     /**
-     * Gets the pitch players should spawn with.
+     * Gets the maximum yaw that the player can spawn with.
      *
-     * @return pitch, or {@code null} if pitch will be randomized
+     * @return maximum yaw
      */
-    public @Nullable Float getPitch() {
-        return pitch;
+    public float getMaxYaw() {
+        return maxYaw;
+    }
+
+    /**
+     * Gets the minimum pitch that the player can spawn with.
+     *
+     * @return minimum pitch
+     */
+    public float getMinPitch() {
+        return minPitch;
+    }
+
+    /**
+     * Gets the maximum pitch that the player can spawn with.
+     *
+     * @return maximum pitch
+     */
+    public float getMaxPitch() {
+        return maxPitch;
     }
 
     /**
@@ -82,10 +104,10 @@ public class SpawnRegion {
         double z = boundingBox.getWidthZ() == 0 ? boundingBox.getMinZ()
                 : random.nextDouble(boundingBox.getMinZ(), boundingBox.getMaxZ());
 
-        float yaw = this.yaw != null ? this.yaw
-                : random.nextFloat(-180, 180);
-        float pitch = this.pitch != null ? this.pitch
-                : random.nextFloat(-90, 90);
+        float yaw = minYaw == maxYaw ? minYaw
+                : random.nextFloat(minYaw, maxYaw);
+        float pitch = minPitch == maxPitch ? minPitch
+                : random.nextFloat(minPitch, maxPitch);
 
         return new Location(world, x, y, z, yaw, pitch);
     }

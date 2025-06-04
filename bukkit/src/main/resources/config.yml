@@ -3,15 +3,25 @@ current-server: hub
 
 # The spawn regions for this server.
 # Each subsection defines a spawn region corresponding to a server identifier.
-# For example,
+# The special server identifier "default" is used if no other defined region applies to a player.
+#
+# Below is an example region definition.
 # survival:  # the defined region is used when players join from a server with this identifier
 #   world: world  # the name of the world to spawn players in (if excluded, the default world will be used)
-#   x1: 48  # the coordinates of one corner of the spawn region
-#   y1: 1   # see above
-#   z1: 48  # see above
-#   x2: 64  # the coordinates of the opposite corner of the spawn region (any excluded values are set equal to the first corner)
-#   y2: 1   # see above (note: make this the same as y1 if you want players to always spawn at the same height)
-#   z2: 64  # see above
-#   yaw: 90  # the yaw to spawn players with (if excluded, players will spawn with a random yaw)
-#   pitch: 0  # the pitch to spawn players with (if excluded, players will spawn with a random pitch)
+#   x: 48         # the coordinates to spawn players at (required)
+#   y: 1          # see above
+#   z: 48         # see above
+#   x2: 64        # if included, players will spawn with a random X-coordinate between "x" and "x2"
+#   y2: 1         # if included, players will spawn with a random Y-coordinate between "y" and "y2"
+#   z2: 64        # if included, players will spawn with a random Z-coordinate between "z" and "z2"
+#   yaw: 90       # the yaw to spawn players with (if excluded, defaults to 0)
+#   yaw2: -90     # if included, players will spawn with a random yaw between "yaw" and "yaw2"
+#   pitch: 0      # the pitch to spawn players with (if excluded, defaults to 0)
+#   pitch2: -30   # if included, players will spawn with a random pitch between "pitch" and "pitch2"
 spawns:
+  default:
+    x: 0.5
+    y: 100.0
+    z: 0.5
+    yaw: 0.0
+    pitch: 0.0

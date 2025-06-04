@@ -9,6 +9,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
@@ -30,17 +31,18 @@ public class SpawnListener implements Listener {
         retrieveServerCookie(event.getPlayer()).whenComplete((server, throwable) -> {
             if (throwable != null) {
                 plugin.getLogger().log(Level.WARNING, "Failed to retrieve server cookie from " + event.getPlayer().getName(), throwable);
-            } else if (server != null) {
-                teleportToSpawn(event.getPlayer(), server);
             }
+
+            teleportToSpawn(event.getPlayer(), server);
             storeServerCookie(event.getPlayer());
+
         }).exceptionally(throwable -> {
             plugin.getLogger().log(Level.WARNING, "Exception while handling cookie response", throwable);
             return null;
         });
     }
 
-    private void teleportToSpawn(@NotNull Player player, @NotNull String server) {
+    private void teleportToSpawn(@NotNull Player player, @Nullable String server) {
         SpawnRegion region = plugin.getSpawnRegion(server);
         if (region == null) return;
 
