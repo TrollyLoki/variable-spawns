@@ -2,6 +2,8 @@ package net.trollyloki.plugins.variablespawns.bukkit;
 
 import net.trollyloki.plugins.variablespawns.Constants;
 import net.trollyloki.plugins.variablespawns.CookieUtils;
+import net.trollyloki.plugins.variablespawns.bukkit.api.SpawnProvider;
+import net.trollyloki.plugins.variablespawns.bukkit.api.event.PlayerSpawnEvent;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,7 +15,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 
 public class SpawnListener implements Listener {
@@ -43,10 +44,13 @@ public class SpawnListener implements Listener {
     }
 
     private void teleportToSpawn(@NotNull Player player, @Nullable String server) {
-        SpawnRegion region = plugin.getSpawnRegion(server);
-        if (region == null) return;
+        PlayerSpawnEvent event = new PlayerSpawnEvent(player, server, plugin.getSpawnRegion(server));
+        plugin.getServer().getPluginManager().callEvent(event);
 
-        player.teleportAsync(region.getRandomLocation(ThreadLocalRandom.current()));
+        SpawnProvider provider = event.getSpawnProvider();
+        if (provider == null) return;
+
+        player.teleportAsync(provider.getSpawnLocation());
     }
 
     private @NotNull CompletableFuture<String> retrieveServerCookie(@NotNull Player player) {

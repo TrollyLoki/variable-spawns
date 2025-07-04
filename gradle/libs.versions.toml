@@ -1,0 +1,11 @@
+[versions]
+paper = "1.20.6-R0.1-SNAPSHOT"
+bungee = "1.21-R0.2"
+shadow = "8.3.6"
+
+[libraries]
+paper-api = { module = "io.papermc.paper:paper-api", version.ref = "paper" }
+bungeecord-api = { module = "net.md-5:bungeecord-api", version.ref = "bungee" }
+
+[plugins]
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }

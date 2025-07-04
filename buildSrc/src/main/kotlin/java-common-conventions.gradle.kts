@@ -2,12 +2,19 @@ plugins {
     id("java")
 }
 
+group = "net.trollyloki.plugins.variablespawns"
+version = "1.3"
+
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }
 
 repositories {
     mavenCentral()
+    maven {
+        name = "papermc"
+        url = uri("https://repo.papermc.io/repository/maven-public/")
+    }
 }
 
 dependencies {

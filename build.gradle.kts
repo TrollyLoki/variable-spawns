@@ -1,10 +1,7 @@
 plugins {
-    id("java")
-    id("com.gradleup.shadow") version "8.3.6"
+    id("java-common-conventions")
+    alias(libs.plugins.shadow)
 }
-
-group = "net.trollyloki.plugins"
-version = "1.2"
 
 dependencies {
     implementation(project("bukkit"))
