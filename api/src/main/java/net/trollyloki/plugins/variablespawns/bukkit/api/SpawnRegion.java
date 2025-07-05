@@ -1,18 +1,16 @@
-package net.trollyloki.plugins.variablespawns.bukkit.api.provider;
+package net.trollyloki.plugins.variablespawns.bukkit.api;
 
-import net.trollyloki.plugins.variablespawns.bukkit.api.SpawnProvider;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.util.BoundingBox;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * A region in which players can be spawned randomly.
  */
-public class SpawnRegion implements SpawnProvider {
+public class SpawnRegion {
 
     private final @NotNull World world;
     private final @NotNull BoundingBox boundingBox;
@@ -31,7 +29,7 @@ public class SpawnRegion implements SpawnProvider {
      */
     public SpawnRegion(@NotNull World world, @NotNull BoundingBox boundingBox, float yaw1, float yaw2, float pitch1, float pitch2) {
         this.world = world;
-        this.boundingBox = boundingBox;
+        this.boundingBox = boundingBox.clone();
         this.minYaw = Math.min(yaw1, yaw2);
         this.maxYaw = Math.max(yaw1, yaw2);
         this.minPitch = Math.min(pitch1, pitch2);
@@ -104,10 +102,13 @@ public class SpawnRegion implements SpawnProvider {
         return maxPitch;
     }
 
-    @Override
-    public @NotNull Location getSpawnLocation() {
-        Random random = ThreadLocalRandom.current();
-
+    /**
+     * Gets a random location within this spawn region.
+     *
+     * @param random random source
+     * @return location
+     */
+    public @NotNull Location getRandomLocation(@NotNull Random random) {
         double x = boundingBox.getWidthX() == 0 ? boundingBox.getMinX()
                 : random.nextDouble(boundingBox.getMinX(), boundingBox.getMaxX());
         double y = boundingBox.getHeight() == 0 ? boundingBox.getMinY()

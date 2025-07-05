@@ -1,6 +1,6 @@
 package net.trollyloki.plugins.variablespawns.bukkit.api.event;
 
-import net.trollyloki.plugins.variablespawns.bukkit.api.SpawnProvider;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
@@ -16,40 +16,41 @@ public class PlayerSpawnEvent extends PlayerEvent {
     private static final HandlerList HANDLER_LIST = new HandlerList();
 
     private final @Nullable String server;
-    private @Nullable SpawnProvider spawnProvider;
+    private @Nullable Location spawnLocation;
 
     @ApiStatus.Internal
-    public PlayerSpawnEvent(@NotNull Player who, @Nullable String server, @Nullable SpawnProvider spawnProvider) {
+    public PlayerSpawnEvent(@NotNull Player who, @Nullable String server, @Nullable Location spawnLocation) {
         super(who);
         this.server = server;
-        this.spawnProvider = spawnProvider;
+        this.spawnLocation = spawnLocation;
     }
 
     /**
-     * Gets the ID of the server that the player came from, or {@code null} if the player just joined
+     * Gets the ID of the server that the player came from.
      *
-     * @return origin server
+     * @return origin server, or {@code null} if the player just joined
      */
     public @Nullable String getOriginServer() {
         return server;
     }
 
     /**
-     * Gets the provider that will be used to obtain a spawn location.
+     * Gets the location that the player will spawn at.
+     * The returned location is mutable.
      *
-     * @return spawn provider, or {@code null} if the player's spawn location will not be changed
+     * @return spawn location, or {@code null} if the player's spawn location will not be changed
      */
-    public @Nullable SpawnProvider getSpawnProvider() {
-        return spawnProvider;
+    public @Nullable Location getSpawnLocation() {
+        return spawnLocation;
     }
 
     /**
-     * Sets the provider that will be used to obtain a spawn location.
+     * Sets the location that the player will spawn at.
      *
-     * @param spawnProvider spawn provider, or {@code null} to not change the player's spawn location
+     * @param spawnLocation spawn location, or {@code null} to not change the player's spawn location
      */
-    public void setSpawnProvider(@Nullable SpawnProvider spawnProvider) {
-        this.spawnProvider = spawnProvider;
+    public void setSpawnLocation(@Nullable Location spawnLocation) {
+        this.spawnLocation = spawnLocation;
     }
 
     @Override
